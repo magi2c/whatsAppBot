@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>WhatsApp bot</title>
+    <meta charset="utf-8">
+</head>
+<body>
+    <h1>WhatsApp bot example</h1>
+    <p>Using list for lauch message</p>
+
+    <p>Phone coma separator:</p>
+    <div>
+        <input id="phones" type="text" size="50">
+    </div>
+
+    <p>Type a message:</p>
+    <div>
+        <textarea id="message" cols="49"></textarea>
+    </div>
+
+
+    <button onclick="start();">Send</button>
+
+    <div>By Tampermonkey</div>
+
+<script>
+    var infiniteLoop = true;
+    var phoneList;
+    var message;
+    var winWa;
+
+    function openWhatsappTab(phone, text) {
+        var url = "https://api.whatsapp.com/send?phone=" + phone + "&text=" + text;
+        winWa = window.open(url, '_blank');
+    }
+
+
+    function start() {
+        phoneList = document.getElementById("phones").value.split(',');
+        message = document.getElementById("message").value;
+
+        sendList();
+    }
+
+    function sendList() {
+
+        if (typeof winWa === 'undefined' || winWa.closed == true) {
+            var phone = phoneList.pop();
+            if  (typeof phone !== 'undefined') {
+                openWhatsappTab(phone, message);
+            } else {
+                infiniteLoop = false;
+            }
+        }
+
+        if (infiniteLoop == true) {
+            setTimeout(sendList, 200);
+        }
+    }
+
+
+</script>
+
+</body>
+</html>
