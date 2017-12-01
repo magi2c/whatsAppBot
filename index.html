@@ -24,13 +24,13 @@
     <div>By Tampermonkey</div>
 
 <script>
-    var infiniteLoop = true;
-    var phoneList;
-    var message;
-    var winWa;
+    let infiniteLoop = true;
+    let phoneList;
+    let message;
+    let winWa;
 
     function openWhatsappTab(phone, text) {
-        var url = "https://api.whatsapp.com/send?phone=" + phone + "&text=" + text;
+        const url = `https://api.whatsapp.com/send?phone=${phone}&text=${text}`;
         winWa = window.open(url, '_blank');
     }
 
@@ -45,7 +45,7 @@
     function sendList() {
 
         if (typeof winWa === 'undefined' || winWa.closed == true) {
-            var phone = phoneList.pop();
+            const phone = phoneList.pop();
             if  (typeof phone !== 'undefined') {
                 openWhatsappTab(phone, message);
             } else {
@@ -57,8 +57,6 @@
             setTimeout(sendList, 200);
         }
     }
-
-
 </script>
 
 </body>
